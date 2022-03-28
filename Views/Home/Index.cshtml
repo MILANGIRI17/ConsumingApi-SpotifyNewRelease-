@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Release>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card m-1" style="width:350px;">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(model=>item.Artists)</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(model=>item.Name)</h6>
+                <p class="card-text ">@Html.DisplayFor(model=>item.Date)</p>
+               <img src="@Html.DisplayFor(model=>item.ImageUrl)" width="300" height="300"/>
+            </div>
+        </div>
+    }
+</div>
