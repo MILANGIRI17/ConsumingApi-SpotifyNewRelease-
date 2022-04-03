@@ -1,0 +1,30 @@
+﻿@model API.Models.Blog
+
+@{
+    ViewData["Title"] = "BlogDetail";
+}
+<style>
+    .blog-body {
+       padding:0 20vw;
+    }
+      .blog-body p{
+      text-align:justify;
+    }
+
+    .blog-body img{
+        width:100%;
+    }
+
+        .blog-body p {
+            font-weight: 400;
+        }
+</style>
+
+    <div class="row">
+        <div class="blog-body">
+        <h1>@Model.Title</h1>
+        <img src="@Model.Image_link_medium" width="100" />
+       <p> @Html.Raw(Model.Body)</p>
+    </div>
+    </div>
+

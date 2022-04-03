@@ -1,0 +1,42 @@
+﻿@model IEnumerable<API.Models.Blog>
+
+@{
+    ViewData["Title"] = "GetBlogs";
+}
+
+<h1>GetBlogs</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card m-1" style="width:350px;">
+            <a asp-action="BlogDetail" asp-controller="Home" asp-route-q="@item.Title" style="text-decoration: none;">
+                <div class="card-text">
+                    <img src="@item.Image_link_medium" width="100" alt="">
+                    <h3 class="card-title">@item.Title</h3>
+                    <p>@item.Desc</p>
+                </div>
+                </a>
+        </div>
+    }
+</div>
+@*<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card m-1" style="width:350px;">
+            <div class="card-body">
+                
+               <img src="@item.Image_link_small)" width="300" height="300"/>
+                <p class="card-text ">@Html.DisplayFor(model=>item.Date)</p>
+
+               <h5 class="card-title">@Html.DisplayFor(model=>item.Artists)</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(model=>item.Name)</h6>
+            </div>
+        </div>
+    }
+</div>*@

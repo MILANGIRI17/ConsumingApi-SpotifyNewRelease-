@@ -6,39 +6,24 @@ using System.Net;
 
 namespace API.Controllers
 {
-     public class HomeController : Controller
+    public class HomeController : Controller
     {
         private readonly ISpotifyAccountService spotifyAccountService;
         private readonly IConfiguration configuration;
         private readonly ISpotifyService spotifyService;
+        private readonly IHttpClientFactory clientFactory;
 
-        public HomeController(ISpotifyAccountService spotifyAccountService,IConfiguration configuration,ISpotifyService spotifyService)
+        public HomeController(ISpotifyAccountService spotifyAccountService, IConfiguration configuration, ISpotifyService spotifyService,IHttpClientFactory clientFactory)
         {
             this.spotifyAccountService = spotifyAccountService;
             this.configuration = configuration;
             this.spotifyService = spotifyService;
+            this.clientFactory = clientFactory;
         }
 
-        //[HttpGet]
-        //private async Task<IActionResult> GetBlogs(string name)
-        //{
-        //   using(var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("https://www.nepalinames.com/blog/wp-json/zooktirest/v2/posts/search/?s=");
-        //        using (HttpResponseMessage response = await client.GetAsync(name))
-        //        {
-        //            var responseContent = response.Content.ReadAsStringAsync().Result;
-        //            response.EnsureSuccessStatusCode();
-        //            return Ok(responseContent);
-        //        }
-
-        //    }
-            
-        //}
-
         public async Task<IActionResult> Index()
-          {
-            var newReleases =await GetReleases();
+        {
+            var newReleases = await GetReleases();
             return View(newReleases);
         }
         public async Task<IEnumerable<Release>> GetReleases()
@@ -46,13 +31,13 @@ namespace API.Controllers
             try
             {
                 var token = await spotifyAccountService.GetToken(configuration["Spotify:ClientId"], configuration["Spotify:ClientSecret"]);
-                var newRelease = await spotifyService.GetNewReleases("US",50, token);
+                var newRelease = await spotifyService.GetNewReleases("FR", 50, token);
                 return newRelease;
             }
             catch (Exception ex)
             {
                 Debug.Write(ex);
-                return  Enumerable.Empty<Release>();
+                return Enumerable.Empty<Release>();
             }
         }
 

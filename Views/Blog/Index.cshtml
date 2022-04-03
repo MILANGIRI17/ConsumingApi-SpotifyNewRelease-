@@ -1,0 +1,20 @@
+﻿@model IEnumerable<API.Models.Blog>
+
+@{
+    ViewData["Title"] = "GetBlogs";
+}
+<p class=@ViewData["isCachedData"]>@ViewData["loadLocation"]</p>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card m-1" style="width:350px;">
+            <a asp-action="Detail" asp-controller="Blog" asp-route-q="@item.Title" style="text-decoration: none;">
+                <div class="card-text">
+                    <img src="@item.Image_link_medium" width="100" alt="">
+                    <h3 class="card-title">@item.Title</h3>
+                    <p>@item.Desc</p>
+                </div>
+                </a>
+        </div>
+    }
+</div>

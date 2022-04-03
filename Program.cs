@@ -1,8 +1,15 @@
 using API.Services;
+using StackExchange.Redis;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "Redis_Demo";
+});
 builder.Services.AddHttpClient<ISpotifyAccountService, SpotifyAccountService>(c =>
 {
     c.BaseAddress = new Uri("https://accounts.spotify.com/api/");
@@ -12,7 +19,13 @@ builder.Services.AddHttpClient<ISpotifyService,SpotifyService>(c =>
     c.BaseAddress = new Uri("https://api.spotify.com/v1/");
     c.DefaultRequestHeaders.Add("Accept", "application/.json");
 });
+builder.Services.AddHttpClient("blog",c=>
+{
+    c.BaseAddress = new Uri("https://www.tipsnepal.com/wp-json/zooktirest/v2/posts/3/1");
+}
+);
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -34,5 +47,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();
